@@ -1,0 +1,27 @@
+{
+  "name": "labecommerce-backend",
+  "version": "1.0.0",
+  "description": "Primeiro projeto da Labenu de backend - Labecommerce",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Peeox/labecommerce-backend.git"
+  },
+  "keywords": [
+    "Labenu",
+    "commerce",
+    "labecommerce",
+    "exercicio",
+    "projeto"
+  ],
+  "author": "Pedro Simoes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Peeox/labecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/Peeox/labecommerce-backend#readme"
+}

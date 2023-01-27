@@ -1,23 +1,17 @@
-/* Exercício 1
-    O que foi feito
-     - Criada pastas src e build
-     - Na pasta src, rodei o comando "npm i typescript -D", na qual faz a instalação da lib
-     - Também na pasta, rodei o comando "npm i @types/node -D", na qual faz a instalação das tipagens do node
-      - Criei na pasta principal o arquivo "tsconfig.json" e copiei as configurações do exercício em aula
-      - Refatorei o package.json, retirando a linha /"type": "module"/ 
-      - Limpei a pasta principal, retirando o index.js que continha o jogo teste de par ou ímpar
-      - Criei este arquivo (index.ts) dentro da pasta src e fiz os testes para averiguar se estava ocorrendo tudo certo:
-         - escrevi no arquivo: */
-              //console.log("Hello World!")
 
-/* Continuação do Exercício 3 
-    - Fiz a importação das variáveis já tipadas da "database.ts"
-    - Fiz o console.log de cada uma
-    - Rodei no terminal o script "npm start" (que eu criei no package.json)
-    - Retornou os dados conforme solicitado */
+import { createUser, getAllUsers, createPurchase, createProduct, getAllProducts, getProductById, queryProductsByName, product, getAllPurchasesFromUserId, user } from "./database";
+import { Categories } from "./types";
 
-import { user, product, purchase } from "./database";
+createUser("Menino", "email@emailzinho.com", "Senha.10")
 
-console.log(user)
-console.log(product)
-console.log(purchase)
+console.table(getAllUsers(user))
+
+createProduct("666", "Cândida", 9, Categories.limpeza)
+console.table(getAllProducts(product))
+
+console.table(getProductById("3332"))
+
+console.table(queryProductsByName("pão"))
+
+createPurchase("xablau", "3332", 1, 10)
+console.table(getAllPurchasesFromUserId("xablau"))

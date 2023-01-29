@@ -8,36 +8,20 @@ import { Categories, TProduct, TPurchase, TUser } from "./types";
 //e Response, sempre entre chaves {} 
 import  express, { Request, Response} from 'express'
 
-//import do CORS 
+
 import cors from 'cors';
 
-//criação do servidor express 
+
 const app = express();
 
-//configuração do middleware que garante que nossas respostas estejam sempre
-//no formato json 
+
 app.use(express.json());
 
-//configuração do middleware que habilita o CORS 
 app.use(cors());
 
-//colocando nosso servidor para escutar a porta 3003 da nossa máquina (primeiro 
-//parâmetro da função listen)
-//a função de callback (segundo parâmetro da função listen) serve para sabermos 
-//que o servidor está de pé, através do console.log que imprimirá a mensagem no 
-//terminal 👇🏽
- 
 app.listen(3003, () => {
     console.log("Servidor rodando na porta 3003");
 });
-
-/*  Endpoint de teste básico
-
-    app.get('/ping', (req: Request, res: Response) => {
-    res.send('Pong!')
-  });
-
-*/
 
 //          -----   -----       "Início" do Projeto       -----   -----          //
 
@@ -54,11 +38,6 @@ console.table(queryProductsByName("pão"))
 
 createPurchase("xablau", "3332", 1, 10)
 console.table(getAllPurchasesFromUserId("xablau"))
-
-// Exercício 2 
-
-// Fazer os 3 endpoints abaixo, conforme desenvolvido em aula
-
 
 app.get('/users', (req: Request, res: Response) => {
     res.status(200).send(users)
@@ -81,7 +60,7 @@ app.get('/products/search', (req: Request, res: Response) => {
 })
 
 
-// Exercício 3
+
 
 app.post('/users', (req: Request, res: Response)=>{
     const {id, email, password} = req.body as TUser
@@ -128,3 +107,86 @@ app.post("/purchases",(req: Request, res: Response)=>{
     res.status(201).send("Compra realizada com sucesso")
 
 })
+
+// Exercício 1
+
+app.get("/products/:id", (req: Request, res: Response) => {
+    const id = req.params.id;
+  
+    const result = products.find((product) => product.id === id);
+  
+    res.status(200).send(result);
+  })
+
+app.get("/users/:id/purchases", (req: Request, res: Response) => {
+    const id = req.params.id
+  
+    const result = purchases.find((user) => user.userId === id);
+  
+    res.status(200).send(result);
+})
+
+// Exercício 2
+
+app.delete("/user/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+  
+    const indexToRemove = users.findIndex((user) => user.id === id)
+    if (indexToRemove >= 0) {        
+        users.splice(indexToRemove, 1)
+    }
+  
+    res.status(200).send("Item deletado com sucesso")
+  })
+
+app.delete("/product/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+  
+    const indexToRemove = products.findIndex((product) => product.id === id)
+  
+    if (indexToRemove >= 0) {      
+        products.splice(indexToRemove, 1)
+    }
+  
+    res.status(200).send("Item deletado com sucesso")
+  })
+
+// Exercício 3
+
+app.put("/user/:id", (req: Request, resp: Response) => {
+    const id = req.params.id
+  
+    const newId = req.body.id as string | undefined
+    const newEmail = req.body.email as string | undefined
+    const newPassword = req.body.password as string| undefined
+  
+    const user = users.find((user) => user.id === id)
+  
+    if (user){
+        user.id = newId || user.id
+        user.email = newEmail || user.email
+        user.password = newPassword || user.password        
+    }
+  
+    resp.status(200).send("Atualização realizada com sucesso")
+  })
+
+  app.put("/product/:id", (req: Request, resp: Response) => {
+    const id = req.params.id
+  
+    const newId = req.body.id as string | undefined
+    const newName = req.body.name as string | undefined
+    const newPrice = req.body.price as number | undefined
+    const newCategory = req.body.category as Categories | undefined
+  
+    const product = products.find((product) => product.id === id)
+  
+    if (product){
+        product.id = newId || product.id
+        product.name = newName || product.name
+        product.price = newPrice || product.price
+        product.category = newCategory || product.category        
+    }
+  
+    resp.status(200).send("Atualização realizada com sucesso")
+  })

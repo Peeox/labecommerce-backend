@@ -67,17 +67,16 @@ export function getProductById(idToSearch: string) : TProduct[] | undefined {
     })
 }
 
-export function queryProductsByName (q: string) : TProduct[] {
-    return products.filter((
-        product: TProduct) => {
-        return product.name.toLowerCase() === q.toLowerCase()
-    })
-}
+export function queryProductsByName(q: string): TProduct[] {
+    return products.filter((product) => {
+      return product.name.toLowerCase().includes(q.toLowerCase());
+    });
+  }
 
 export function createPurchase (userId: string, productId: string, quantity: number, totalPrice: number) {
     const newPurchase : TPurchase = {userId, productId, quantity, totalPrice}
     purchases.push(newPurchase)
-    console.log("Compra realizada com sucesso");
+    console.log("Compra realizada com sucesso!");
 }
 
 

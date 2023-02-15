@@ -1,4 +1,4 @@
--- Active: 1676479023870@@127.0.0.1@3306
+-- Active: 1676497437882@@127.0.0.1@3306
 
 -- Criei o labecommerce.db e conectei ele no SQLite
 -- Criei o arquivo labecommerce.sql e iniciei o projeto aqui
@@ -117,3 +117,41 @@ SELECT * FROM products
 SELECT * FROM products
 WHERE price >= 1 AND price <= 8
 ORDER BY price ASC;
+
+-- Crie uma tabela nova com as definições solicitadas
+
+CREATE TABLE purchases (
+    id TEXT UNIQUE PRIMARY KEY NOT NULL,
+    total_price REAL NOT NULL,
+    paid INTEGER NOT NULL,
+    delivered_at TEXT,
+    buyer_id TEXT NOT NULL, 
+    FOREIGN KEY (buyer_id) REFERENCES users(id) 
+);
+
+-- Crie dois pedidos para dois usuários cadastrados
+
+INSERT INTO purchases(id, total_price, paid, buyer_id)
+VALUES  (0001, 50, 0, 2),
+        (0003, 20, 0, 2),
+        (0002, 60, 0, 3),
+        (0004, 800, 0, 3);
+
+-- Edite status de entrega e pagamento de um pedido
+
+UPDATE purchases
+SET delivered_at = DATETIME('now'), 
+    paid = 1
+WHERE id = 0001;
+
+-- Consulta com JOIN nas tabelas users e purchases
+
+SELECT 
+users.id AS userId,
+purchases.id AS purchaseId, 
+purchases.total_price AS totalPrice, 
+purchases.paid, 
+purchases.delivered_at AS deliveredAt
+FROM purchases
+JOIN users ON purchases.buyer_id = users.id 
+WHERE users.id = 2;
